@@ -1,0 +1,7 @@
+export { default as IcmsIpiEntrada } from './IcmsIpiEntrada.vue'
+export { default as IcmsIpiSaida } from './IcmsIpiSaida.vue'
+export { default as PisCofinsEntrada } from './PisCofinsEntrada.vue'
+export { default as PisCofinsSaida } from './PisCofinsSaida.vue'
+export { default as EfdPisCofins } from './EfdPisCofins.vue'
+export { default as EfdIcmsIpi } from './EfdIcmsIpi.vue'
+export { default as Home } from './Home.vue'

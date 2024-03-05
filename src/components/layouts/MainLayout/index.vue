@@ -19,8 +19,7 @@ import Header from './Header.vue'
 
           <!-- Page content -->
           <div class="max-w-5xl mx-auto flex flex-col lg:flex-row lg:space-x-8 xl:space-x-16">
-
-
+            <router-view />
           </div>
 
         </div>

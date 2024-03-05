@@ -1,0 +1,72 @@
+[
+  {
+    "path": "/",
+    "name": "Home",
+    "component": {
+      "__hmrId": "611a0d94",
+      "__file": "C:/Users/Cassio/Documents/Projetos/fiscal-front/src/components/view/Home.vue"
+    },
+    "meta": {
+      "layout": "MainLayout"
+    }
+  },
+  {
+    "path": "/efd-icms-ipi",
+    "name": "EFD ICMS IPI",
+    "children": [
+      {
+        "path": "entrada",
+        "name": "Entrada",
+        "component": {
+          "__hmrId": "83bac5a5",
+          "__file": "C:/Users/Cassio/Documents/Projetos/fiscal-front/src/components/view/IcmsIpiEntrada.vue"
+        },
+        "meta": {
+          "layout": "MainLayout"
+        }
+      },
+      {
+        "path": "saida",
+        "name": "Saida",
+        "component": {
+          "__hmrId": "038f7b21",
+          "__file": "C:/Users/Cassio/Documents/Projetos/fiscal-front/src/components/view/IcmsIpiSaida.vue"
+        },
+        "meta": {
+          "layout": "MainLayout"
+        }
+      }
+    ]
+  },
+  {
+    "path": "/efd-pis-cofins",
+    "name": "EFD PIS COFINS",
+    "children": [
+      {
+        "path": "entrada",
+        "name": "Entrada",
+        "component": {
+          "__hmrId": "efe6948d",
+          "__file": "C:/Users/Cassio/Documents/Projetos/fiscal-front/src/components/view/PisCofinsEntrada.vue"
+        },
+        "meta": {
+          "layout": "MainLayout"
+        }
+      },
+      {
+        "path": "saida",
+        "name": "Saida",
+        "component": {
+          "__hmrId": "b23f27b6",
+          "__file": "C:/Users/Cassio/Documents/Projetos/fiscal-front/src/components/view/PisCofinsSaida.vue"
+        },
+        "meta": {
+          "layout": "MainLayout"
+        }
+      }
+    ],
+    "meta": {
+      "layout": "MainLayout"
+    }
+  }
+]

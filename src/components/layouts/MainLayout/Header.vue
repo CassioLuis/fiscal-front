@@ -1,12 +1,6 @@
 <script setup lang="ts">
+import { ModalSearch, Notification, DropdownHelp, ThemeToggle, DropdownProfile } from '../../ui'
 import { inject, ref } from 'vue'
-
-import SearchModal from '../../ModalSearch.vue'
-import Notifications from '../../DropdownNotifications.vue'
-import Help from '../../DropdownHelp.vue'
-import ThemeToggle from '../../ThemeToggle.vue'
-import UserMenu from '../../DropdownProfile.vue'
-
 
 const searchModalOpen = ref(false)
 
@@ -49,15 +43,15 @@ const { isOpen }: any = inject('useSidebar')
                   d="M15.707 14.293L13.314 11.9a8.019 8.019 0 01-1.414 1.414l2.393 2.393a.997.997 0 001.414 0 .999.999 0 000-1.414z" />
               </svg>
             </button>
-            <SearchModal id="search-modal" searchId="search" :modalOpen="searchModalOpen"
+            <ModalSearch id="search-modal" searchId="search" :modalOpen="searchModalOpen"
               @open-modal="searchModalOpen = true" @close-modal="searchModalOpen = false" />
           </div>
-          <Notifications align="right" />
-          <Help align="right" />
+          <Notification align="right" />
+          <DropdownHelp align="right" />
           <ThemeToggle />
           <!-- Divider -->
           <hr class="w-px h-6 bg-slate-200 dark:bg-slate-700 border-none" />
-          <UserMenu align="right" />
+          <DropdownProfile align="right" />
 
         </div>
 

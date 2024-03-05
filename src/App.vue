@@ -5,12 +5,12 @@ import { useRouter } from 'vue-router'
 
 const { currentRoute } = useRouter()
 
-const layout = computed(() => currentRoute.value.meta.layout)
+const layout: any = computed(() => currentRoute.value.meta.layout ?? 'DefaultLayout')
 
 </script>
 
 <template>
-  <component :is="layout ?? 'DefaultLayout'">
-    <router-view />
-  </component>
+  <component :is="layout" />
+  <!-- <router-view />
+  </component> -->
 </template>

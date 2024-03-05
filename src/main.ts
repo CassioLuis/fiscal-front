@@ -1,13 +1,13 @@
 import { createApp } from 'vue'
 import './assets/main.css'
 import App from './App.vue'
-import MainLayout from './components/layouts/MainLayout/index.vue'
-import { registerPlugins } from './plugins'
+import { MainLayout } from './components/layouts'
 import useSidebar from './composable/useSidebar'
+import router from './routes'
 
 const app = createApp(App)
 
-registerPlugins(app)
+app.use(router)
 
 // COMPOSABLES
 app.provide('useSidebar', useSidebar)
