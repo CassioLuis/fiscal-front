@@ -10,87 +10,83 @@ import { createRouter, createWebHistory } from 'vue-router'
 const lazyLoad = (componentName: string) => import(`./components/view/${componentName}.vue`)
 
 // COM CHILDREN
-// const router = createRouter({
-//   history: createWebHistory(import.meta.env.BASE_URL),
-//   routes: [
-//     {
-//       path: '/efd-icms-ipi',
-//       name: 'EFD ICMS IPI',
-//       children: [
-//         {
-//           path: 'entrada',
-//           name: 'Entrada',
-//           component: () => lazyLoad('IcmsIpiEntrada'),
-//         },
-//         {
-//           path: 'saida',
-//           name: 'Saida',
-//           component: () => lazyLoad('IcmsIpiSaida'),
-//         }
-//       ]
-//     },
-//     {
-//       path: '/efd-pis-cofins',
-//       name: 'EFD PIS COFINS',
-//       children: [
-//         {
-//           path: 'entrada',
-//           name: 'Entrada',
-//           component: () => lazyLoad('PisCofinsEntrada'),
-//         },
-//         {
-//           path: 'saida',
-//           name: 'Saida',
-//           component: () => lazyLoad('PisCofinsSaida'),
-//         }
-//       ]
-//     },
-//     {
-//       path: '/efd-pis-cofins2',
-//       name: 'EFD PIS COFINS',
-//       children: [
-//         {
-//           path: 'entrada',
-//           name: 'Entrada',
-//           component: () => lazyLoad('PisCofinsEntrada'),
-//         },
-//         {
-//           path: 'saida',
-//           name: 'Saida',
-//           component: () => lazyLoad('PisCofinsSaida'),
-//         }
-//       ]
-//     }
-//   ]
-// })
-
-
-
-// SEM CHILDREN
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/efd-icms-ipi',
       name: 'EFD ICMS IPI',
-      component: () => lazyLoad('IcmsIpiEntrada')
+      children: [
+        {
+          path: 'entrada',
+          name: 'entradaIcms',
+          component: () => lazyLoad('IcmsIpiEntrada'),
+          meta: {
+            name: 'Entrada'
+          }
+        },
+        {
+          path: 'saida',
+          name: 'saidaIcms',
+          component: () => lazyLoad('IcmsIpiSaida'),
+          meta: {
+            name: 'Saida'
+          }
+        }
+      ]
     },
     {
       path: '/efd-pis-cofins',
       name: 'EFD PIS COFINS',
-      component: () => lazyLoad('PisCofinsSaida'),
-    },
-    {
-      path: '/efd-pis-cofins2',
-      name: 'EFD PIS COFINS',
-      component: () => lazyLoad('PisCofinsEntrada'),
-    },
-    {
-      path: '/efd-pis-cofins3',
-      name: 'EFD PIS COFINS',
-      component: () => lazyLoad('PisCofinsEntrada'),
+      children: [
+        {
+          path: 'entrada',
+          name: 'entradaPis',
+          component: () => lazyLoad('PisCofinsEntrada'),
+          meta: {
+            name: 'Entrada'
+          }
+        },
+        {
+          path: 'saida',
+          name: 'saidaPis',
+          component: () => lazyLoad('PisCofinsSaida'),
+          meta: {
+            name: 'Saida'
+          }
+        }
+      ]
     }
   ]
 })
+
+
+
+// SEM CHILDREN
+// const router = createRouter({
+//   history: createWebHistory(import.meta.env.BASE_URL),
+//   routes: [
+//     {
+//       path: '/efd-icms-ipi/entrada',
+//       name: 'EFD ICMS IPI / ENTRADA',
+//       component: () => lazyLoad('IcmsIpiEntrada')
+//     },
+//     {
+//       path: '/efd-icms-ipi/saida',
+//       name: 'EFD ICMS IPI / SAIDA',
+//       component: () => lazyLoad('IcmsIpiSaida')
+//     },
+//     {
+//       path: '/efd-pis-cofins/entrada',
+//       name: 'EFD PIS COFINS / ENTRADA',
+//       component: () => lazyLoad('PisCofinsEntrada'),
+//     },
+//     {
+//       path: '/efd-pis-cofins/saida',
+//       name: 'EFD PIS COFINS / SAIDA',
+//       component: () => lazyLoad('PisCofinsSaida'),
+//     }
+//   ]
+// })
 
 export default router
