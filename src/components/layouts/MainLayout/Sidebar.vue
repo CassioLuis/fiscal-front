@@ -2,8 +2,6 @@
 import { inject, ref, watch, onMounted, onUnmounted } from 'vue'
 import sideBarRoutes from '../../../routes/sideBarRoutes'
 import { useRouter } from 'vue-router'
-
-
 import SidebarLinkGroup from './SidebarLinkGroup.vue'
 
 const { isOpen } = inject('useSidebar')
