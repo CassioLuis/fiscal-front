@@ -16,7 +16,7 @@ export default [
     ]
   },
   {
-    module: 'Sped',
+    module: 'fiscal',
     routes: spedRoutes
   }
 ]

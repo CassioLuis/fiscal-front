@@ -1,36 +1,37 @@
 <script setup>
 import { inject, ref, watch, onMounted, onUnmounted } from 'vue'
 import sideBarRoutes from '../../../routes/sideBarRoutes'
-import { useRouter } from 'vue-router'
 import SidebarLinkGroup from './SidebarLinkGroup.vue'
+
 
 const { isOpen } = inject('useSidebar')
 
 const storedSidebarExpanded = localStorage.getItem('sidebar-expanded')
-const sidebarExpanded = ref(storedSidebarExpanded === null ? false : storedSidebarExpanded === 'true')
 
-const currentRoute = useRouter().currentRoute.value
+const sidebarExpanded = ref(
+  storedSidebarExpanded === null ? false : storedSidebarExpanded === 'true'
+)
 
 // close if the esc key is pressed
 const keyHandler = ({ keyCode }) => {
-  if (!isOpen.value || keyCode !== 27) return
-  isOpen.value = false
+  if (!isOpen.value || keyCode !== 27) return;
+  isOpen.value = false;
 }
 
 onMounted(() => {
-  document.addEventListener('keydown', keyHandler)
+  document.addEventListener('keydown', keyHandler);
 })
 
 onUnmounted(() => {
-  document.removeEventListener('keydown', keyHandler)
+  document.removeEventListener('keydown', keyHandler);
 })
 
 watch(sidebarExpanded, () => {
-  localStorage.setItem('sidebar-expanded', sidebarExpanded.value)
+  localStorage.setItem('sidebar-expanded', sidebarExpanded.value);
   if (sidebarExpanded.value) {
-    document.querySelector('body')?.classList.add('sidebar-expanded')
+    document.querySelector('body')?.classList.add('sidebar-expanded');
   } else {
-    document.querySelector('body')?.classList.remove('sidebar-expanded')
+    document.querySelector('body')?.classList.remove('sidebar-expanded');
   }
 })
 
@@ -63,9 +64,12 @@ watch(sidebarExpanded, () => {
             viewBox="0 0 24 24"
             xmlns="http://www.w3.org/2000/svg"
           >
-            <path d="M10.7 18.7l1.4-1.4L7.8 13H20v-2H7.8l4.3-4.3-1.4-1.4L4 12z" />
+            <path
+              d="M10.7 18.7l1.4-1.4L7.8 13H20v-2H7.8l4.3-4.3-1.4-1.4L4 12z"
+            />
           </svg>
         </button>
+
         <!-- Logo -->
         <router-link
           class="block"
@@ -135,106 +139,9 @@ watch(sidebarExpanded, () => {
       </div>
 
       <!-- Links -->
-      <div class="space-y-8">
-        <!-- Pages group -->
-        <div
-          v-for="(group, groupIdx) of sideBarRoutes"
-          :key="groupIdx"
-        >
-          <h3 class="text-xs uppercase text-slate-500 font-semibold pl-3">
-            <span
-              class="hidden lg:block lg:sidebar-expanded:hidden 2xl:hidden text-center w-6"
-              aria-hidden="true"
-            >•••</span>
-            <span class="lg:hidden lg:sidebar-expanded:block 2xl:block">{{ group.module }}</span>
-          </h3>
-          <ul class="mt-3">
-            <SidebarLinkGroup
-              v-slot="parentLink"
-              v-for="(route, routeIdx) of group.routes"
-              :key="routeIdx"
-              :active-condition="currentRoute.fullPath === '/' || currentRoute.fullPath.includes('dashboard')"
-            >
-              <a
-                class="block text-slate-200 truncate transition duration-150"
-                :class="(currentRoute.fullPath === '/' || currentRoute.fullPath.includes('dashboard')) ? 'hover:text-slate-200' : 'hover:text-white'"
-                href="#0"
-                @click.prevent="parentLink.handleClick(); sidebarExpanded = true"
-              >
-                <div class="flex items-center justify-between">
-                  <div class="flex items-center">
-                    <svg
-                      class="shrink-0 h-6 w-6"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        class="fill-current"
-                        :class="(currentRoute.fullPath === '/' || currentRoute.fullPath.includes('dashboard')) ? 'text-indigo-500' : 'text-slate-400'"
-                        d="M12 0C5.383 0 0 5.383 0 12s5.383 12 12 12 12-5.383 12-12S18.617 0 12 0z"
-                      />
-                      <path
-                        class="fill-current"
-                        :class="(currentRoute.fullPath === '/' || currentRoute.fullPath.includes('dashboard')) ? 'text-indigo-600' : 'text-slate-600'"
-                        d="M12 3c-4.963 0-9 4.037-9 9s4.037 9 9 9 9-4.037 9-9-4.037-9-9-9z"
-                      />
-                      <path
-                        class="fill-current"
-                        :class="(currentRoute.fullPath === '/' || currentRoute.fullPath.includes('dashboard')) ? 'text-indigo-200' : 'text-slate-400'"
-                        d="M12 15c-1.654 0-3-1.346-3-3 0-.462.113-.894.3-1.285L6 6l4.714 3.301A2.973 2.973 0 0112 9c1.654 0 3 1.346 3 3s-1.346 3-3 3z"
-                      />
-                    </svg>
-                    <span
-                      class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200"
-                    >
-                      {{ route.name }}
-                    </span>
-                  </div>
-                  <!-- Icon -->
-                  <div class="flex shrink-0 ml-2">
-                    <svg
-                      class="w-3 h-3 shrink-0 ml-1 fill-current text-slate-400"
-                      :class="parentLink.expanded && 'rotate-180'"
-                      viewBox="0 0 12 12"
-                    >
-                      <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z" />
-                    </svg>
-                  </div>
-                </div>
-              </a>
-              <div class="lg:hidden lg:sidebar-expanded:block 2xl:block">
-                <ul
-                  v-for="(childRoute, idx) of route.children"
-                  :key="idx"
-                  class="pl-9 mt-1"
-                  :class="!parentLink.expanded && 'hidden'"
-                >
-                  <router-link
-                    :to="`${route.path}/${childRoute.path}`"
-                    custom
-                    v-slot="{ href, navigate, isExactActive }"
-                  >
-                    <li class="mb-1 last:mb-0">
-                      <a
-                        class="block transition duration-150 truncate"
-                        :class="isExactActive ? 'text-indigo-500' : 'text-slate-400 hover:text-slate-200'"
-                        :href="href"
-                        @click="navigate"
-                      >
-                        <span
-                          class="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200"
-                        >
-                          {{ childRoute.name }}
-                        </span>
-                      </a>
-                      <span class="text-sm italic text-slate-500">{{ `${route.path}/${childRoute.path}` }}</span>
-                    </li>
-                  </router-link>
-                </ul>
-              </div>
-            </SidebarLinkGroup>
-          </ul>
-        </div>
-      </div>
+      <SidebarLinkGroup
+        :routes="sideBarRoutes"
+      />
 
       <!-- Expand / collapse button -->
       <div class="pt-3 hidden lg:inline-flex 2xl:hidden justify-end mt-auto">

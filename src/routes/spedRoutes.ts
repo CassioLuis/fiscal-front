@@ -2,34 +2,31 @@ import {
   IcmsIpiEntrada,
   IcmsIpiSaida,
   PisCofinsEntrada,
-  PisCofinsSaida,
-  EfdIcmsIpi,
-  EfdPisCofins
+  PisCofinsSaida
 } from '../components/view'
 
 export default [
   {
     path: '/efd-icms-ipi',
     name: 'EFD ICMS IPI',
-    component: EfdIcmsIpi,
     meta: {
-      layout: 'MainLayout'
+      groupOpen: false
     },
     children: [
       {
         path: 'entrada',
-        name: 'Entrada',
         component: IcmsIpiEntrada,
         meta: {
-          layout: 'MainLayout'
+          layout: 'MainLayout',
+          name: 'Entrada'
         }
       },
       {
         path: 'saida',
-        name: 'Saida',
         component: IcmsIpiSaida,
         meta: {
-          layout: 'MainLayout'
+          layout: 'MainLayout',
+          name: 'Saida'
         }
       }
     ]
@@ -37,25 +34,24 @@ export default [
   {
     path: '/efd-pis-cofins',
     name: 'EFD PIS COFINS',
-    component: EfdPisCofins,
     meta: {
-      layout: 'MainLayout'
+      groupOpen: false
     },
     children: [
       {
         path: 'entrada',
-        name: 'Entrada',
         component: PisCofinsEntrada,
         meta: {
-          layout: 'MainLayout'
+          layout: 'MainLayout',
+          name: 'Entrada'
         }
       },
       {
         path: 'saida',
-        name: 'Saida',
         component: PisCofinsSaida,
         meta: {
-          layout: 'MainLayout'
+          layout: 'MainLayout',
+          name: 'Saida'
         }
       }
     ]
