@@ -3,14 +3,20 @@ import {
   IcmsIpiSaida,
   PisCofinsEntrada,
   PisCofinsSaida
-} from '../components/view'
+} from '../../components/view'
+
+import { shallowRef } from 'vue'
+import { Book } from '../../components/icons'
 
 export default [
   {
     path: '/efd-icms-ipi',
     name: 'EFD ICMS IPI',
     meta: {
-      groupOpen: false
+      groupOpen: false,
+      svg: {
+        component: shallowRef(Book)
+      }
     },
     children: [
       {
@@ -35,7 +41,10 @@ export default [
     path: '/efd-pis-cofins',
     name: 'EFD PIS COFINS',
     meta: {
-      groupOpen: false
+      groupOpen: false,
+      svg: {
+        component: shallowRef(Book)
+      }
     },
     children: [
       {

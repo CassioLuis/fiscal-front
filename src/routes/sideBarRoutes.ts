@@ -1,22 +1,29 @@
-import spedRoutes from "./spedRoutes"
-import { Home } from "../components/view"
+import { shallowRef } from 'vue'
+import { contabilRoutes, fiscalRoutes } from './modules'
+import { Home } from '../components/icons'
 
 export default [
   {
-    module: 'inicio',
     routes: [
       {
         path: '/',
         name: 'Home',
         component: Home,
         meta: {
-          layout: 'MainLayout'
+          layout: 'MainLayout',
+          svg: {
+            component: shallowRef(Home)
+          }
         }
       }
     ]
   },
   {
     module: 'fiscal',
-    routes: spedRoutes
+    routes: fiscalRoutes
+  },
+  {
+    module: 'contabil',
+    routes: contabilRoutes
   }
 ]
