@@ -8,3 +8,8 @@
 @import 'additional-styles/flatpickr.css';
 
 @import 'tailwindcss/utilities';
+
+
+/* input[type='file'] {
+  @apply hidden
+} */
