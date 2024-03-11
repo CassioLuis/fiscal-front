@@ -67,28 +67,19 @@ function cleanFile () {
           </template>
           <template #title>
             <div class="gap-4 flex items-center">
-              <div>
-                <span
-                  class="rounded-full border border-slate-200 dark:border-slate-700 p-3 flex justify-center items-center"
+              <div class="rounded-full border border-slate-200 dark:border-slate-700 p-3 flex justify-center items-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 640 512"
+                  class="text-indigo-500"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="lucide lucide-file-up"
-                  >
-                    <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />
-                    <path d="M14 2v4a2 2 0 0 0 2 2h4" />
-                    <path d="M12 12v6" />
-                    <path d="m15 15-3-3-3 3" />
-                  </svg>
-                </span>
+                  <path
+                    d="M144 480C64.5 480 0 415.5 0 336c0-62.8 40.2-116.2 96.2-135.9c-.1-2.7-.2-5.4-.2-8.1c0-88.4 71.6-160 160-160c59.3 0 111 32.2 138.7 80.2C409.9 102 428.3 96 448 96c53 0 96 43 96 96c0 12.2-2.3 23.8-6.4 34.6C596 238.4 640 290.1 640 352c0 70.7-57.3 128-128 128H144zm79-217c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l39-39V392c0 13.3 10.7 24 24 24s24-10.7 24-24V257.9l39 39c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0l-80 80z"
+                    class="fill-current text-indigo-500"
+                  />
+                </svg>
               </div>
               <div class="flex flex-col gap-1">
                 <span class="font-semibold text-lg">Envie extrato.</span>
@@ -98,10 +89,18 @@ function cleanFile () {
           </template>
           <template #content>
             <div class="flex flex-col gap-4">
-              <DragAndDrop @up-load-file="onUpLoad" />
+              <DragAndDrop @up-load-file="onUpLoad">
+                <template #formats>
+                  <span class="text-xs text-slate-500 md:text-sm">Formatos
+                    <span class="font-semibold">OFX</span>,
+                    <span class="font-semibold">PDF</span>  ou
+                    <span class="font-semibold">XLS</span>.
+                  </span>
+                </template>
+              </DragAndDrop>
               <Card
                 v-if="selectedFiles.size"
-                class="flex"
+                class="flex rounded-md"
                 @event="cleanFile"
               >
                 <template #content>
@@ -113,9 +112,10 @@ function cleanFile () {
                       width="40"
                       height="40"
                       viewBox="0 0 18 18"
+                      class="fill-current"
                     >
                       <g
-                        class="nc-icon-wrapper"
+                        class="nc-icon-wrapper fill-current"
                         fill="#212121"
                       >
                         <line
@@ -127,8 +127,8 @@ function cleanFile () {
                           stroke="#212121"
                           stroke-linecap="round"
                           stroke-linejoin="round"
-                          stroke-width="1.5"
-                          data-color="color-2"
+                          stroke-width="1.0"
+                          class="fill-current stroke-indigo-500"
                         />
                         <line
                           x1="5.75"
@@ -139,8 +139,8 @@ function cleanFile () {
                           stroke="#212121"
                           stroke-linecap="round"
                           stroke-linejoin="round"
-                          stroke-width="1.5"
-                          data-color="color-2"
+                          stroke-width="1.0"
+                          class="fill-current stroke-indigo-500"
                         />
                         <line
                           x1="5.75"
@@ -151,8 +151,8 @@ function cleanFile () {
                           stroke="#212121"
                           stroke-linecap="round"
                           stroke-linejoin="round"
-                          stroke-width="1.5"
-                          data-color="color-2"
+                          stroke-width="1.0"
+                          class="fill-current stroke-indigo-500"
                         />
                         <path
                           d="M2.75,14.25V3.75c0-1.105,.895-2,2-2h5.586c.265,0,.52,.105,.707,.293l3.914,3.914c.188,.188,.293,.442,.293,.707v7.586c0,1.105-.895,2-2,2H4.75c-1.105,0-2-.895-2-2Z"
@@ -160,7 +160,8 @@ function cleanFile () {
                           stroke="#212121"
                           stroke-linecap="round"
                           stroke-linejoin="round"
-                          stroke-width="1.5"
+                          stroke-width="1.0"
+                          class="stroke-indigo-500"
                         />
                         <path
                           d="M15.16,6.25h-3.41c-.552,0-1-.448-1-1V1.852"
@@ -168,7 +169,8 @@ function cleanFile () {
                           stroke="#212121"
                           stroke-linecap="round"
                           stroke-linejoin="round"
-                          stroke-width="1.5"
+                          stroke-width="1.0"
+                          class="stroke-indigo-500 fill-current text-indigo-500"
                         />
                       </g>
                     </svg>
