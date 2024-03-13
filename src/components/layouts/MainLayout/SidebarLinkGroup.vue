@@ -32,7 +32,12 @@ function navigate (basePath: any, childrenPath: any) {
       :key="groupIdx"
     >
       <h3 class="text-xs uppercase text-slate-500 font-semibold pl-3">
-        <span class="hidden lg:block lg:sidebar-expanded:hidden 2xl:hidden text-center w-6">•••</span>
+        <span
+          v-if="group.module"
+          class="hidden lg:block lg:sidebar-expanded:hidden 2xl:hidden text-center w-6"
+        >
+          •••
+        </span>
         <span class="lg:hidden lg:sidebar-expanded:block 2xl:block">{{ group.module }}</span>
       </h3>
 

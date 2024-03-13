@@ -1,17 +1,27 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import Modal from '../ui/Modal.vue'
-import { DragAndDrop, Card } from '../ui'
-
-const modalOpen = ref(false)
+import { DragAndDrop, Modal, Card } from '../ui'
 
 const selectedFiles = ref<any>([])
+const modalOpen = ref<boolean>(false)
 
-function onUpLoad (event: any) {
-  selectedFiles.value = event
+const dragAndDropArea = ref(false)
+
+function onUpLoad (file: any): void {
+  selectedFiles.value = file
+  dragAndDropArea.value = false
+  console.log(file)
 }
 
-function cleanFile () {
+function onEnter (): void {
+  dragAndDropArea.value = true
+}
+
+function onLeave (): void {
+  dragAndDropArea.value = false
+}
+
+// function cleanFile () {
   // const newInput =
   // inputFile.value?.target.files = { length: 0}
   // console.log(inputFile.value)
@@ -24,24 +34,21 @@ function cleanFile () {
   // inputFile?.parentNode?.replaceChild(newFileInput, inputFile)
 
   // fileInputRef.value = newFileInput
-}
+// }
 
 </script>
 
 <template>
-  <div>
+  <div @dragenter.prevent="onEnter">
     <!-- Page header -->
     <div class="sm:flex sm:justify-between sm:items-center mb-8">
-      <!-- Left: Title -->
       <div class="mb-4 sm:mb-0">
         <h1 class="text-2xl md:text-3xl text-slate-800 dark:text-slate-100 font-bold">
           Extrato ✨
         </h1>
       </div>
 
-      <!-- Right: Actions -->
       <div class="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
-        <!-- Add board button -->
         <Modal
           :modal-open="modalOpen"
           position="top"
@@ -67,7 +74,9 @@ function cleanFile () {
           </template>
           <template #title>
             <div class="gap-4 flex items-center">
-              <div class="rounded-full border border-slate-200 dark:border-slate-700 p-3 flex justify-center items-center">
+              <div
+                class="rounded-full border border-slate-200 dark:border-slate-700 p-3 flex justify-center items-center"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="20"
@@ -89,11 +98,16 @@ function cleanFile () {
           </template>
           <template #content>
             <div class="flex flex-col gap-4">
-              <DragAndDrop @up-load-file="onUpLoad">
+              <DragAndDrop
+                @up-load-file="onUpLoad"
+                title="Solte o extrato aqui para converte-lo."
+                :formats="['pdf', 'ofx', 'xls']"
+                :input-button="true"
+              >
                 <template #formats>
                   <span class="text-xs text-slate-500 md:text-sm">Formatos
                     <span class="font-semibold">OFX</span>,
-                    <span class="font-semibold">PDF</span>  ou
+                    <span class="font-semibold">PDF</span> ou
                     <span class="font-semibold">XLS</span>.
                   </span>
                 </template>
@@ -101,7 +115,6 @@ function cleanFile () {
               <Card
                 v-if="selectedFiles.size"
                 class="flex rounded-md"
-                @event="cleanFile"
               >
                 <template #content>
                   <span
@@ -187,50 +200,61 @@ function cleanFile () {
       </div>
     </div>
 
-    <div class="border-t border-slate-200 dark:border-slate-700">
-      <div class="max-w-2xl m-auto mt-16">
-        <div class="text-center px-4">
-          <div
-            class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-t from-slate-200 to-slate-100 dark:from-slate-700 dark:to-slate-800 mb-4"
-          >
-            <svg
-              class="w-5 h-6 fill-current"
-              viewBox="0 0 20 24"
+    <div class="py-4 border-t border-slate-200 dark:border-slate-700">
+      <DragAndDrop
+        @up-load-file="onUpLoad"
+        @dragleave.prevent="onLeave"
+        v-if="dragAndDropArea"
+        class="backdrop-blur-sm absolute inset-0 bg-slate-900 bg-opacity-30 z-50 transition-opacity top-0 right-0 left-0 bottom-0"
+        title="Solte o extrato aqui para converte-lo."
+        :formats="['pdf', 'ofx', 'xls']"
+        :input-button="false"
+      />
+      <!-- <div class="">
+        <div class="max-w-2xl m-auto mt-16">
+          <div class="text-center px-4">
+            <div
+              class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-t from-slate-200 to-slate-100 dark:from-slate-700 dark:to-slate-800 mb-4"
             >
-              <path
-                class="text-slate-500 dark:text-slate-600"
-                d="M10 10.562l9-5-8.514-4.73a1 1 0 00-.972 0L1 5.562l9 5z"
-              />
-              <path
-                class="text-slate-300 dark:text-slate-400"
-                d="M9 12.294l-9-5v10.412a1 1 0 00.514.874L9 23.294v-11z"
-              />
-              <path
-                class="text-slate-400 dark:text-slate-500"
-                d="M11 12.294v11l8.486-4.714a1 1 0 00.514-.874V7.295l-9 4.999z"
-              />
-            </svg>
+              <svg
+                class="w-5 h-6 fill-current"
+                viewBox="0 0 20 24"
+              >
+                <path
+                  class="text-slate-500 dark:text-slate-600"
+                  d="M10 10.562l9-5-8.514-4.73a1 1 0 00-.972 0L1 5.562l9 5z"
+                />
+                <path
+                  class="text-slate-300 dark:text-slate-400"
+                  d="M9 12.294l-9-5v10.412a1 1 0 00.514.874L9 23.294v-11z"
+                />
+                <path
+                  class="text-slate-400 dark:text-slate-500"
+                  d="M11 12.294v11l8.486-4.714a1 1 0 00.514-.874V7.295l-9 4.999z"
+                />
+              </svg>
+            </div>
+            <h2 class="text-2xl text-slate-800 dark:text-slate-100 font-bold mb-2">
+              Pay your bills in just a few clicks
+            </h2>
+            <div class="mb-6">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+              dolore magna aliqua.
+            </div>
+            <button class="btn bg-indigo-500 hover:bg-indigo-600 text-white">
+              <svg
+                class="w-4 h-4 fill-current opacity-50 shrink-0"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z"
+                />
+              </svg>
+              <span class="ml-2">Add Event</span>
+            </button>
           </div>
-          <h2 class="text-2xl text-slate-800 dark:text-slate-100 font-bold mb-2">
-            Pay your bills in just a few clicks
-          </h2>
-          <div class="mb-6">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua.
-          </div>
-          <button class="btn bg-indigo-500 hover:bg-indigo-600 text-white">
-            <svg
-              class="w-4 h-4 fill-current opacity-50 shrink-0"
-              viewBox="0 0 16 16"
-            >
-              <path
-                d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z"
-              />
-            </svg>
-            <span class="ml-2">Add Event</span>
-          </button>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
