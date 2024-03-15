@@ -13,7 +13,7 @@ import Header from './Header.vue'
       <Header />
 
       <main class="grow">
-        <div class="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
+        <div class="flex px-4 sm:px-6 lg:px-8 py-8 w-full h-full max-w-9xl mx-auto">
           <!-- <div class="max-w-5xl mx-auto flex flex-col lg:flex-row lg:space-x-8 xl:space-x-16">
           </div> -->
           <router-view />
