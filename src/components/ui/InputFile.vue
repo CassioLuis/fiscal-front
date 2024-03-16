@@ -3,7 +3,7 @@ import { Cloud } from '../icons'
 
 defineProps<{
   buttonTittle: string
-  formats: string
+  formats: Array<any>
 }>()
 
 const emit = defineEmits(['upLoadFile'])
@@ -25,7 +25,7 @@ function handleFiles (event: any) {
       name="inputfile"
       type="file"
       class="hidden"
-      :accept="formats"
+      :accept="formats.toString()"
       @change="handleFiles"
     >
   </label>

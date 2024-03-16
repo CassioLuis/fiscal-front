@@ -6,7 +6,7 @@ const emit = defineEmits(['upLoadFile'])
 defineProps<{
   formats: Array<string>,
   title: string,
-  inputButton: boolean
+  inputButton?: boolean
 }>()
 
 function handleFiles (event: any) {
@@ -59,7 +59,7 @@ function onDrop (event: any) {
       name="inputfile"
       type="file"
       class="hidden"
-      accept=".pdf, .ofx, .xls"
+      :accept="formats.toString()"
       @change="handleFiles"
     >
   </label>
