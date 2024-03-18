@@ -45,7 +45,7 @@ function onLeave (): void {
 
     <div
       @dragenter.prevent="onEnter"
-      class="grow relative flex justify-center py-4 border-t border-slate-200 dark:border-slate-700"
+      class="grow relative flex justify-start py-4 border-t border-slate-200 dark:border-slate-700"
     >
       <DragAndDrop
         v-if="dragAndDropArea"
@@ -83,15 +83,15 @@ function onLeave (): void {
 
       <div
         v-if="convertedData.length"
-        class="w-full"
+        class="w-1/2"
       >
         <div class="sm:flex sm:justify-between sm:items-center mb-4 md:mb-2">
           <!-- Left: Title -->
-          <div class="mb-4 sm:mb-0">
-            <h1 class="text-2xl md:text-3xl text-slate-800 dark:text-slate-100 font-bold">
+          <!-- <div class="mb-4 sm:mb-0">
+            <h1 class="mr-4 text-2xl md:text-3xl text-slate-800 dark:text-slate-100 font-bold">
               $47,347.09
             </h1>
-          </div>
+          </div> -->
 
           <!-- Right: Actions  -->
           <div class="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
@@ -112,7 +112,7 @@ function onLeave (): void {
         </div>
 
         <!-- Filters -->
-        <div class="mb-5">
+        <!-- <div class="mb-5">
           <ul class="flex flex-wrap -m-1">
             <li class="m-1">
               <button
@@ -144,7 +144,7 @@ function onLeave (): void {
               </button>
             </li>
           </ul>
-        </div>
+        </div> -->
 
         <!-- Table -->
         <Table />
