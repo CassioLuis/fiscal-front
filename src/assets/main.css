@@ -9,7 +9,14 @@
 
 @import 'tailwindcss/utilities';
 
+::-webkit-scrollbar {
+  @apply w-2;
+}
 
-/* input[type='file'] {
-  @apply hidden
-} */
+::-webkit-scrollbar-track {
+  @apply bg-slate-300 dark:bg-slate-400;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-500;
+}

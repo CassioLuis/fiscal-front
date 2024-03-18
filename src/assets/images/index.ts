@@ -1,0 +1,6 @@
+export { default as Bradesco } from './banco-bradesco.svg'
+export { default as BancoDoBrasil } from './banco-do-brasil.svg'
+export { default as Sicredi } from './sicredi-160.svg'
+export { default as CaixaEconomica } from './caixa-economica-federal.svg'
+export { default as Sicoob } from './sicoob-vector-logo.svg'
+export { default as Santander } from './banco-santander-logo.svg'

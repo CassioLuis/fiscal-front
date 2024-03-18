@@ -12,16 +12,21 @@
   "dependencies": {
     "@tailwindcss/forms": "^0.5.7",
     "@vueuse/core": "^10.9.0",
+    "chart.js": "^4.4.2",
+    "chartjs-adapter-moment": "^1.0.1",
     "flatpickr": "^4.6.13",
+    "moment": "^2.30.1",
     "vue": "^3.4.19",
+    "vue-flatpickr-component": "^11.0.5",
     "vue-router": "^4.3.0"
   },
   "devDependencies": {
+    "@types/node": "^20.11.28",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@vitejs/plugin-vue": "^5.0.4",
+    "@vue/eslint-config-typescript": "^12.0.0",
     "autoprefixer": "^10.4.18",
     "eslint": "^8.57.0",
-    "@vue/eslint-config-typescript": "^12.0.0",
     "eslint-config-standard-with-typescript": "^43.0.1",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-n": "^16.6.2",

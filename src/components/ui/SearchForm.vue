@@ -6,7 +6,7 @@
     >Search</label>
     <input
       id="action-search"
-      class="form-input pl-9 bg-white dark:bg-slate-800"
+      class="form-input pl-9 bg-white dark:bg-slate-800 w-full"
       type="search"
       placeholder="Pesquisar..."
     >

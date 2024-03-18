@@ -1,11 +1,16 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { DragAndDrop, InputFile, SearchForm, Table, PaginationClassic } from '../ui'
-import { Cloud } from '../icons'
+import { ref } from 'vue'
+import {
+  DropdownTransaction, DragAndDrop, InputFile, SearchForm, Table, PaginationClassic, Datepicker, DropdownClassic, CreditCard, DebitCard
+} from '@/components/ui'
+import {
+  BancoDoBrasil, Sicredi, Bradesco, CaixaEconomica, Sicoob, Santander
+} from '@/assets/images'
+import { Cloud } from '@/components/icons'
 
 const selectedFiles = ref<any>([])
 const dragAndDropArea = ref<boolean>(false)
-const convertedData = ref<Array<any>>([])
+const convertedData = ref<Array<any>>([123])
 
 function onUpLoad (file: any): void {
   selectedFiles.value = file
@@ -22,24 +27,60 @@ function onLeave (): void {
   dragAndDropArea.value = false
 }
 
+const banks: Array<any> = [
+  { name: 'B. do Brasil', logo: BancoDoBrasil},
+  { name: 'Sicredi', logo: Sicredi },
+  { name: 'B. Bradesco', logo: Bradesco},
+  { name: 'Caixa Economica', logo: CaixaEconomica},
+  { name: 'Sicoob', logo: Sicoob },
+  { name: 'Santander', logo: Santander }
+]
+
 </script>
 
 <template>
   <div class="grow flex flex-col">
     <!-- Page header -->
-    <div class="sm:flex sm:justify-between sm:items-center mb-8">
+    <div class="sm:flex sm:justify-between sm:items-center mb-5">
       <div class="mb-4 sm:mb-0">
         <h1 class="text-2xl md:text-3xl text-slate-800 dark:text-slate-100 font-bold">
           Extrato ✨
         </h1>
       </div>
 
-      <div class="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
+      <div class="grid sm:auto-cols-max justify-start sm:justify-end gap-2">
         <InputFile
           :formats="['.pdf', '.ofx', '.xls']"
           button-tittle="Enviar Extrato"
           @upLoadFile="onUpLoad"
         />
+      </div>
+    </div>
+    <div>
+      <!-- Filters -->
+      <div class="mb-5 grid grid-flow-col gap-2 sm:auto-cols-max justify-start sm:justify-end">
+        <DropdownClassic :options="banks" />
+        <Datepicker align="right" />
+        <button class="btn bg-indigo-500 hover:bg-indigo-600 text-white">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-search w-4 h-4"
+          >
+            <circle
+              cx="11"
+              cy="11"
+              r="8"
+            />
+            <path d="m21 21-4.3-4.3" />
+          </svg>
+        </button>
+        <!-- <div class="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
+        </div> -->
       </div>
     </div>
 
@@ -82,76 +123,59 @@ function onLeave (): void {
       </div>
 
       <div
-        v-if="convertedData.length"
-        class="w-1/2"
+        v-if="convertedData.length && !dragAndDropArea"
+        class="flex gap-4 justify-center w-full"
       >
-        <div class="sm:flex sm:justify-between sm:items-center mb-4 md:mb-2">
-          <!-- Left: Title -->
-          <!-- <div class="mb-4 sm:mb-0">
-            <h1 class="mr-4 text-2xl md:text-3xl text-slate-800 dark:text-slate-100 font-bold">
-              $47,347.09
-            </h1>
+        <div class="w-2/3 flex flex-col gap-8">
+          <div class="grid grid-cols-12 items-start gap-3">
+            <div class="col-span-6">
+              <CreditCard
+                tittle="Crédito"
+                content="R$ 75.565,32"
+              />
+            </div>
+            <div class="col-span-6">
+              <DebitCard
+                tittle="Débito"
+                content="R$ 45.565,32"
+              />
+            </div>
+          </div>
+          <div class="grid grid-cols-12 items-start gap-2">
+            <div class="col-span-6">
+              <SearchForm class="hidden sm:block w-full" />
+            </div>
+            <div class="col-span-6 flex justify-end">
+              <button class="btn bg-emerald-500 hover:bg-emerald-600 text-white">
+                Baixar Extrato
+              </button>
+            </div>
+            <div class="col-span-12">
+              <span>Transações do </span>
+              <DropdownTransaction />
+            </div>
+          </div>
+          <!-- <div class="sm:flex sm:justify-between sm:items-center mb-4 md:mb-2">
+            <div class="w-full grid grid-flow-col justify-between gap-2">
+              <div class="hidden sm:block w-96">
+                <SearchForm class="hidden sm:block w-full" />
+              </div>
+              <button class="btn bg-emerald-500 hover:bg-emerald-600 text-white">
+                Baixar Extrato
+              </button>
+            </div>
           </div> -->
 
-          <!-- Right: Actions  -->
-          <div class="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
-            <!-- Search form -->
-            <div class="hidden sm:block">
-              <SearchForm class="hidden sm:block" />
-            </div>
 
-            <!-- Export button -->
-            <button class="btn bg-emerald-500 hover:bg-emerald-600 text-white">
-              Baixar Extrato
-            </button>
+
+          <!-- Table -->
+
+          <Table />
+
+          <!-- Pagination -->
+          <div class="mt-8">
+            <PaginationClassic />
           </div>
-        </div>
-
-        <div class="mb-5">
-          <span>Transactions from </span>
-        </div>
-
-        <!-- Filters -->
-        <!-- <div class="mb-5">
-          <ul class="flex flex-wrap -m-1">
-            <li class="m-1">
-              <button
-                class="inline-flex items-center justify-center text-sm font-medium leading-5 rounded-full px-3 py-1 border border-transparent shadow-sm bg-indigo-500 text-white duration-150 ease-in-out"
-              >
-                View
-                All
-              </button>
-            </li>
-            <li class="m-1">
-              <button
-                class="inline-flex items-center justify-center text-sm font-medium leading-5 rounded-full px-3 py-1 border border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 shadow-sm bg-white dark:bg-slate-800 text-slate-500 dark:text-slate-400 duration-150 ease-in-out"
-              >
-                Completed
-              </button>
-            </li>
-            <li class="m-1">
-              <button
-                class="inline-flex items-center justify-center text-sm font-medium leading-5 rounded-full px-3 py-1 border border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 shadow-sm bg-white dark:bg-slate-800 text-slate-500 dark:text-slate-400 duration-150 ease-in-out"
-              >
-                Pending
-              </button>
-            </li>
-            <li class="m-1">
-              <button
-                class="inline-flex items-center justify-center text-sm font-medium leading-5 rounded-full px-3 py-1 border border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 shadow-sm bg-white dark:bg-slate-800 text-slate-500 dark:text-slate-400 duration-150 ease-in-out"
-              >
-                Canceled
-              </button>
-            </li>
-          </ul>
-        </div> -->
-
-        <!-- Table -->
-        <Table />
-
-        <!-- Pagination -->
-        <div class="mt-8">
-          <PaginationClassic />
         </div>
       </div>
     </div>
