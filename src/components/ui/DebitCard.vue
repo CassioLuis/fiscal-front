@@ -29,7 +29,7 @@ const chartData = ref({
         732, 610, 610, 504, 504, 504, 349,
         349, 504, 342, 504, 610, 391, 192,
         154, 273, 191, 191, 126, 263, 349,
-        252, 323, 322, 270, 232,
+        252, 323, 322, 270, 2323.23,
       ],
       fill: true,
       backgroundColor: `rgba(${hexToRGB(tailwindConfig().theme.colors.rose[500])}, 0.08)`,

@@ -79,10 +79,9 @@ const banks: Array<any> = [
             <path d="m21 21-4.3-4.3" />
           </svg>
         </button>
-        <!-- <div class="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
-        </div> -->
       </div>
     </div>
+
 
     <div
       @dragenter.prevent="onEnter"
@@ -151,28 +150,13 @@ const banks: Array<any> = [
               </button>
             </div>
             <div class="col-span-12">
-              <span>Transações do </span>
-              <DropdownTransaction />
+              <span class="text-sm">Transações do </span>
+              <DropdownTransaction class="text-sm" />
             </div>
           </div>
-          <!-- <div class="sm:flex sm:justify-between sm:items-center mb-4 md:mb-2">
-            <div class="w-full grid grid-flow-col justify-between gap-2">
-              <div class="hidden sm:block w-96">
-                <SearchForm class="hidden sm:block w-full" />
-              </div>
-              <button class="btn bg-emerald-500 hover:bg-emerald-600 text-white">
-                Baixar Extrato
-              </button>
-            </div>
-          </div> -->
-
-
-
-          <!-- Table -->
 
           <Table />
 
-          <!-- Pagination -->
           <div class="mt-8">
             <PaginationClassic />
           </div>

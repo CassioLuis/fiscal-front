@@ -26,9 +26,9 @@ export const formatValue = (value) => Intl.NumberFormat('pt-BR', {
   currency: 'BRL',
   maximumSignificantDigits: 3,
   notation: 'compact',
-}).format(value);
+}).format(value)
 
-export const formatThousands = (value) => Intl.NumberFormat('en-US', {
+export const formatThousands = (value) => Intl.NumberFormat('pt-BR', {
   maximumSignificantDigits: 3,
   notation: 'compact',
-}).format(value);
+}).format(value)
