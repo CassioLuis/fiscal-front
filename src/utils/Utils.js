@@ -24,11 +24,12 @@ export const hexToRGB = (h) => {
 export const formatValue = (value) => Intl.NumberFormat('pt-BR', {
   style: 'currency',
   currency: 'BRL',
-  maximumSignificantDigits: 3,
-  notation: 'compact',
+  // maximumSignificantDigits: 3,
+  // notation: 'compact',
+  // minimumFractionDigits: 2,
 }).format(value);
 
-export const formatThousands = (value) => Intl.NumberFormat('en-US', {
+export const formatThousands = (value) => Intl.NumberFormat('pt-BR', {
   maximumSignificantDigits: 3,
   notation: 'compact',
 }).format(value);

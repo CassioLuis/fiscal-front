@@ -10,6 +10,7 @@ import 'chartjs-adapter-moment'
 
 // Import utilities
 import { formatValue } from '@/utils/Utils'
+import moment from 'moment'
 
 Chart.register(LineController, LineElement, Filler, PointElement, LinearScale, TimeScale, Tooltip)
 
@@ -68,7 +69,7 @@ onMounted(() => {
       plugins: {
         tooltip: {
           callbacks: {
-            title: () => false, // Disable tooltip title
+            title: ([context]) => moment(context.label, 'MMM D, YYYY, h:mm:ss a').format('DD/MM/YYYY'),
             label: (context) => formatValue(context.parsed.y),
           },
           bodyColor: darkMode.value ? tooltipBodyColor.dark : tooltipBodyColor.light,
