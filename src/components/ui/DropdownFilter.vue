@@ -6,9 +6,9 @@ defineProps<{
   align: string
 }>()
 
-const dropdownOpen = ref(false)
-const trigger = ref(null)
-const dropdown = ref(null)
+const dropdownOpen = ref<boolean>(false)
+const trigger = ref<HTMLElement>()
+const dropdown = ref<HTMLElement>()
 
 // close on click outside
 const clickHandler = ({ target }: any) => {

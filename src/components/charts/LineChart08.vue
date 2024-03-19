@@ -26,7 +26,7 @@ const canvas = ref<any>(null)
 let chart: any = null
 
 const darkMode = useDark()
-const { gridColor, tooltipBodyColor, tooltipBgColor, tooltipBorderColor } = chartColors
+const { gridColor, tooltipBodyColor, tooltipBgColor, tooltipBorderColor, tooltipTitleColor } = chartColors
 
 onMounted(() => {
   const ctx = canvas.value
@@ -72,6 +72,7 @@ onMounted(() => {
             title: ([context]) => moment(context.label, 'MMM D, YYYY, h:mm:ss a').format('DD/MM/YYYY'),
             label: (context) => formatValue(context.parsed.y),
           },
+          titleColor: darkMode.value ? tooltipTitleColor.dark : tooltipTitleColor.light,
           bodyColor: darkMode.value ? tooltipBodyColor.dark : tooltipBodyColor.light,
           backgroundColor: darkMode.value ? tooltipBgColor.dark : tooltipBgColor.light,
           borderColor: darkMode.value ? tooltipBorderColor.dark : tooltipBorderColor.light,
@@ -97,11 +98,13 @@ watch(() => darkMode.value, () => {
     chart.options.plugins.tooltip.bodyColor = tooltipBodyColor.dark
     chart.options.plugins.tooltip.backgroundColor = tooltipBgColor.dark
     chart.options.plugins.tooltip.borderColor = tooltipBorderColor.dark
+    chart.options.plugins.tooltip.titleColor = tooltipTitleColor.dark
   } else {
     chart.options.scales.y.grid.color = gridColor.light
     chart.options.plugins.tooltip.bodyColor = tooltipBodyColor.light
     chart.options.plugins.tooltip.backgroundColor = tooltipBgColor.light
     chart.options.plugins.tooltip.borderColor = tooltipBorderColor.light
+    chart.options.plugins.tooltip.titleColor = tooltipTitleColor.light
   }
   chart.update('none')
 })

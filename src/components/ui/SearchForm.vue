@@ -1,3 +1,10 @@
+<script setup lang="ts">
+defineProps<{
+  placeholder: string
+}>()
+
+</script>
+
 <template>
   <form class="relative">
     <label
@@ -8,7 +15,7 @@
       id="action-search"
       class="form-input pl-9 bg-white dark:bg-slate-800 w-full"
       type="search"
-      placeholder="Pesquisar..."
+      :placeholder="placeholder"
     >
     <button
       class="absolute inset-0 right-auto group"

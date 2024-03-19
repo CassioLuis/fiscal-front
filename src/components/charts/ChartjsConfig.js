@@ -49,8 +49,8 @@ export const chartColors = {
     dark: tailwindConfig().theme.colors.slate[800]
   },
   tooltipTitleColor: {
-    light: tailwindConfig().theme.colors.slate[800],
-    dark: tailwindConfig().theme.colors.slate[100]
+    light: tailwindConfig().theme.colors.slate[500],
+    dark: tailwindConfig().theme.colors.slate[200]
   },
   tooltipBodyColor: {
     light: tailwindConfig().theme.colors.slate[800],

@@ -1,19 +1,23 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
-import UserAvatar from '@/assets/images/user-avatar-32.png'
 
-const dropdownOpen = ref(false)
-const trigger = ref(null)
-const dropdown = ref(null)
+
+defineProps<{
+  align: string
+}>()
+
+const dropdownOpen = ref<boolean>(false)
+const trigger = ref<HTMLElement>()
+const dropdown = ref<HTMLElement>()
 
 // close on click outside
-const clickHandler = ({ target }) => {
-  if (!dropdownOpen.value || dropdown.value.contains(target) || trigger.value.contains(target)) return
+const clickHandler = ({ target }: any) => {
+  if (!dropdownOpen.value || dropdown.value?.contains(target) || trigger.value?.contains(target)) return
   dropdownOpen.value = false
 }
 
 // close if the esc key is pressed
-const keyHandler = ({ keyCode }) => {
+const keyHandler = ({ keyCode }: any) => {
   if (!dropdownOpen.value || keyCode !== 27) return
   dropdownOpen.value = false
 }
