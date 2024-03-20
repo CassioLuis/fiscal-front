@@ -5,17 +5,11 @@ import Header from './Header.vue'
 
 <template>
   <div class="flex h-[100dvh] overflow-hidden">
-    <!-- <Sidebar :sidebarOpen="sidebarOpen" @close-sidebar="sidebarOpen = false" /> -->
     <Sidebar />
-
     <div class="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-      <!-- <Header :sidebarOpen="sidebarOpen" @toggle-sidebar="sidebarOpen = !sidebarOpen" /> -->
       <Header />
-
       <main class="grow">
-        <div class="flex px-4 sm:px-6 lg:px-8 py-8 w-full h-full max-w-9xl mx-auto">
-          <!-- <div class="max-w-5xl mx-auto flex flex-col lg:flex-row lg:space-x-8 xl:space-x-16">
-          </div> -->
+        <div class="flex px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
           <router-view />
         </div>
       </main>

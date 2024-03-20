@@ -33,7 +33,7 @@ onUnmounted(() => {
   <div
     @mouseenter="dropdownOpen = true"
     @mouseleave="dropdownOpen = false"
-    class="fixed right-8 bottom-8 select-none"
+    class="fixed right-6 bottom-8 select-none"
   >
     <transition
       enter-active-class="transition ease-out duration-300 transform"
