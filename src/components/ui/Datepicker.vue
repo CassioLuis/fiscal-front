@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import flatPickr from 'vue-flatpickr-component'
+import { Portuguese } from 'flatpickr/dist/l10n/pt.js'
 
 const props = defineProps<{
   align: string
@@ -10,15 +11,16 @@ const date = ref(null)
 
 const config: any = {
   mode: 'range',
+  locale: Portuguese,
   static: true,
   monthSelectorType: 'static',
-  dateFormat: 'M j, Y',
+  dateFormat: 'd/m/Y',
   defaultDate: [new Date().setDate(new Date().getDate() - 6), new Date()],
   prevArrow: '<svg class="fill-current" width="7" height="11" viewBox="0 0 7 11"><path d="M5.4 10.8l1.4-1.4-4-4 4-4L5.4 0 0 5.4z" /></svg>',
   nextArrow: '<svg class="fill-current" width="7" height="11" viewBox="0 0 7 11"><path d="M1.4 10.8L0 9.4l4-4-4-4L1.4 0l5.4 5.4z" /></svg>',
   onReady: (_: Date, dateStr: string, instance: any) => {
     instance.element.value = dateStr.replace('to', '-')
-    const customClass = (props.align) ? props.align : ''
+    const customClass = props.align ? props.align : ''
     instance.calendarContainer.classList.add(`flatpickr-${customClass}`)
   },
   onChange: (_: Date, dateStr: string, instance: any) => {
@@ -31,7 +33,7 @@ const config: any = {
 <template>
   <div class="relative">
     <flat-pickr
-      class="form-input pl-9 dark:bg-slate-800 text-slate-500 hover:text-slate-600 dark:text-slate-300 dark:hover:text-slate-200 font-medium w-[15.5rem]"
+      class="w-[16.0rem] form-input pl-9 dark:bg-slate-800 text-slate-500 hover:text-slate-600 dark:text-slate-300 dark:hover:text-slate-200 font-medium"
       :config="config"
       v-model="date"
     />

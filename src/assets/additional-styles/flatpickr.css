@@ -38,6 +38,11 @@
     margin-left: 0;
 }
 
+.flatpickr-left.flatpickr-calendar {
+    @apply left-0 right-auto;
+    margin-left: 0;
+}
+
 .flatpickr-calendar.animate.open {
     animation: fpFadeInDown 200ms ease-out;
 }

@@ -62,13 +62,9 @@ const headers = ['Data', 'Descrição', 'Documento', 'Valor', 'Saldo']
     </div>
 
     <!-- Filters -->
-    <div class="col-span-12 flex justify-end gap-2 mb-5">
-      <DropdownClassic
-        :options="banks"
-      />
-      <Datepicker
-        align="right"
-      />
+    <div class="col-span-12 flex justify-end flex-col sm:flex-row gap-2 mb-5">
+      <DropdownClassic :options="banks" />
+      <Datepicker align="left" />
       <button class="btn bg-indigo-500 hover:bg-indigo-600 text-white">
         <svg
           viewBox="0 0 24 24"
@@ -88,14 +84,12 @@ const headers = ['Data', 'Descrição', 'Documento', 'Valor', 'Saldo']
           <path d="m21 21-4.3-4.3" />
         </svg>
       </button>
-      <!-- <div class="flex flex-col sm:flex-row gap-2">
-      </div> -->
     </div>
 
     <!-- Content -->
     <div
       @dragenter.prevent="onEnter"
-      class="min-h-[74vh] col-span-12 relative flex justify-start py-4 border-t border-slate-200 dark:border-slate-700"
+      class="min-h-[74dvh] col-span-12 relative flex justify-start py-4 border-t border-slate-200 dark:border-slate-700"
     >
       <!-- Drag Drop -->
       <DragAndDrop
