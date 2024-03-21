@@ -11,7 +11,7 @@ import { dataStatement } from '@/infra/mock'
 
 const selectedFiles = ref<any>([])
 const dragAndDropArea = ref<boolean>(false)
-const convertedData = ref<Array<any>>([])
+const convertedData = ref<Array<any>>([123])
 
 function onUpLoad (file: any): void {
   selectedFiles.value = file
@@ -37,7 +37,13 @@ const banks: Array<any> = [
   { name: 'Santander', logo: Santander }
 ]
 
-const headers = ['Data', 'Descrição', 'Documento', 'Valor', 'Saldo']
+const headers = [
+  { name: 'Data', key: 'data' },
+  { name: 'Descrição', key: 'descricao' },
+  { name: 'Documento', key: 'documento' },
+  { name: 'Valor', key: 'valor' },
+  { name: 'Saldo', key: 'saldo' }
+]
 
 
 </script>

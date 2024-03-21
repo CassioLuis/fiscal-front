@@ -21,7 +21,7 @@ export default [
     "saldo": -19133.48
   },
   {
-    "data": "02/10/2023",
+    "data": "01/10/2023",
     "descricao": "RECEBIMENTO PIX",
     "documento": "06446793103",
     "valor": 139.40,
@@ -103,13 +103,6 @@ export default [
     "documento": "98538829149",
     "valor": 9.60,
     "saldo": -18587.02
-  },
-  {
-    "data": "02/10/2023",
-    "descricao": "RECEBIMENTO PIX",
-    "documento": "98538829149",
-    "valor": 9.60,
-    "saldo": -18577.42
   },
   {
     "data": "02/10/2023",
