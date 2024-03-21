@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+  <div class="flex flex-col sm:flex-row sm:items-center sm:gap-10 sm:justify-center">
     <nav
       class="mb-4 sm:mb-0 sm:order-1"
       role="navigation"

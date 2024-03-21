@@ -1,14 +1,22 @@
 <script setup lang="ts">
-import { TableItem, TableHeader } from '@/components/ui'
+import { TableItem, TableHeader, SearchForm } from '@/components/ui'
 import { ref } from 'vue'
 
 
-const props = defineProps<{
+const { tableData } = defineProps<{
   tableData: Array<any>
   headers: Array<any>
 }>()
 
-const sorted = ref<Array<any>>(props.tableData)
+const tableDataRef = ref<Array<any>>(tableData)
+
+function handleSort (key: string) {
+  if (keyValue !== key) position = 0
+  const direction = directions[position]
+  const sortFunction = sortFunctions[direction]
+  sortFunction(key)
+  keyValue = key
+}
 
 const directions: Array<string> = ['asc', 'desc', 'default']
 
@@ -18,24 +26,16 @@ let keyValue: string = ''
 const sortFunctions: any = {
   asc (key: string) {
     position++
-    sorted.value = sorted.value.sort((a: any, b: any) => asc(a[key], b[key]))
+    tableDataRef.value = tableDataRef.value.sort((a: any, b: any) => asc(a[key], b[key]))
   },
   desc (key: string) {
     position++
-    sorted.value = sorted.value.sort((a: any, b: any) => desc(a[key], b[key]))
+    tableDataRef.value = tableDataRef.value.sort((a: any, b: any) => desc(a[key], b[key]))
   },
   default () {
     position = 0
-    sorted.value = props.tableData
+    tableDataRef.value = tableData
   }
-}
-
-function handleSort (key: string) {
-  if (keyValue !== key) position = 0
-  const direction = directions[position]
-  const sortFunction = sortFunctions[direction]
-  sortFunction(key)
-  keyValue = key
 }
 
 function asc (a: string, b: string): number {
@@ -50,16 +50,42 @@ function desc (a: string, b: string): number {
   return 0
 }
 
+function handleSearch (keyWord: any) {
+  keyWordRef.value = keyWord
+  tableDataRef.value = tableData.filter(objeto => {
+    return Object.keys(objeto).some(key => {
+      return String(objeto[key]).toLowerCase().includes(keyWord.toLowerCase())
+    })
+  })
+}
+
+const keyWordRef = ref<any>()
+
 </script>
 
 <template>
   <div class="bg-white dark:bg-slate-900">
     <div>
       <!-- Table -->
-      <div class="overflow-x-auto">
+      <div class="overflow-x-auto p-4">
+        <div class="mb-4 grid grid-cols-12 gap-2">
+          <div class="col-span-12 md:col-span-6">
+            <!-- <h1 class="font-semibold mb-2">
+              Pesquisa
+            </h1> -->
+            <SearchForm
+              @search-word="handleSearch"
+              :placeholder="'Pesquise por descrição, data, documento ou valor'"
+              class="w-full"
+            />
+          </div>
+        </div>
+
         <table class="table-auto w-full dark:text-slate-300">
           <!-- Table header -->
-          <thead class="text-xs font-semibold uppercase text-slate-500 border-t border-b border-slate-200 dark:border-slate-700">
+          <thead
+            class="text-xs font-semibold uppercase text-slate-500 border-t border-b border-slate-200 dark:border-slate-700"
+          >
             <TableHeader
               :headers="headers"
               @send-key="handleSort"
@@ -69,8 +95,45 @@ function desc (a: string, b: string): number {
           <tbody
             class="text-sm divide-y divide-slate-200 dark:divide-slate-700 border-b border-slate-200 dark:border-slate-700"
           >
+            <tr v-if="!tableDataRef.length">
+              <td
+                colspan="99"
+                class="px-2 first:pl-5 last:pr-5 py-8 whitespace-nowrap md:w-1/2"
+              >
+                <div class="flex flex-col items-center gap-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path
+                      d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"
+                      class="dark:text-slate-500 text-slate-300"
+                    />
+                    <path
+                      d="M12 9v4"
+                      class="dark:text-slate-500 text-slate-300"
+                    />
+                    <path
+                      d="M12 17h.01"
+                      class="dark:text-slate-500 text-slate-300"
+                    />
+                  </svg>
+                  <span class="font-medium text-sm dark:text-slate-500 text-slate-300">
+                    Nenhum dado encontrado para "{{ keyWordRef }}".
+                  </span>
+                </div>
+              </td>
+            </tr>
+
             <TableItem
-              v-for="(tableLine, idx) in sorted"
+              v-for="(tableLine, idx) in tableDataRef"
               :key="idx"
               :table-line="tableLine"
             />

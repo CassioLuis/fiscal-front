@@ -3,7 +3,7 @@ defineProps<{ headers: any }>()
 
 const emit = defineEmits(['sendKey'])
 
-function sort (key: any) {
+function sendKey (key: any) {
   emit('sendKey', key)
 }
 
@@ -18,7 +18,7 @@ function sort (key: any) {
     >
       <div
         class="font-semibold text-left cursor-pointer"
-        @click.prevent="sort(key)"
+        @click.prevent="sendKey(key)"
       >
         {{ name }}
       </div>
