@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { TableItem, TableHeader, SearchForm } from '@/components/ui'
-import { ref } from 'vue'
+import { TableItem, TableHeader, SearchForm, PaginationClassic } from '@/components/ui'
+import { ref, reactive } from 'vue'
 
 
 const { tableData } = defineProps<{
@@ -8,7 +8,7 @@ const { tableData } = defineProps<{
   headers: Array<any>
 }>()
 
-const tableDataRef = ref<Array<any>>(tableData)
+const tableDataRef = reactive<{ tableData: Array<any> }>({ tableData })
 
 function handleSort (key: string) {
   if (keyValue !== key) position = 0
@@ -26,15 +26,16 @@ let keyValue: string = ''
 const sortFunctions: any = {
   asc (key: string) {
     position++
-    tableDataRef.value = tableDataRef.value.sort((a: any, b: any) => asc(a[key], b[key]))
+    tableDataRef.tableData.sort((a: any, b: any) => asc(a[key], b[key]))
   },
   desc (key: string) {
     position++
-    tableDataRef.value = tableDataRef.value.sort((a: any, b: any) => desc(a[key], b[key]))
+    tableDataRef.tableData.sort((a: any, b: any) => desc(a[key], b[key]))
   },
   default () {
     position = 0
-    tableDataRef.value = tableData
+    tableDataRef.tableData.splice(0, tableDataRef.tableData.length, ...tableData)
+    // tableDataRef.tableData = tableData
   }
 }
 
@@ -52,14 +53,32 @@ function desc (a: string, b: string): number {
 
 function handleSearch (keyWord: any) {
   keyWordRef.value = keyWord
-  tableDataRef.value = tableData.filter(objeto => {
+  tableDataRef.tableData = tableData.filter(objeto => {
     return Object.keys(objeto).some(key => {
       return String(objeto[key]).toLowerCase().includes(keyWord.toLowerCase())
     })
   })
+
+  // tableDataRef.splice(0, tableDataRef.length, ...tableData.filter(objeto => {
+  //   return Object.keys(objeto).some(key => {
+  //     return String(objeto[key]).toLowerCase().includes(keyWord.toLowerCase())
+  //   })
+  // }))
+
+  // Vue.set(tableDataRef, 'value', tableData.filter(objeto => {
+  //   return Object.keys(objeto).some(key => {
+  //     return String(objeto[key]).toLowerCase().includes(keyWord.toLowerCase())
+  //   })
+  // }))
 }
 
-const keyWordRef = ref<any>()
+const keyWordRef = ref<any>('')
+
+const pageRef = ref<Array<any>>([])
+
+function paginate (emit: any) {
+  pageRef.value = emit
+}
 
 </script>
 
@@ -95,7 +114,7 @@ const keyWordRef = ref<any>()
           <tbody
             class="text-sm divide-y divide-slate-200 dark:divide-slate-700 border-b border-slate-200 dark:border-slate-700"
           >
-            <tr v-if="!tableDataRef.length">
+            <tr v-if="!tableDataRef.tableData.length">
               <td
                 colspan="99"
                 class="px-2 first:pl-5 last:pr-5 py-8 whitespace-nowrap md:w-1/2"
@@ -125,20 +144,34 @@ const keyWordRef = ref<any>()
                       class="dark:text-slate-500 text-slate-300"
                     />
                   </svg>
-                  <span class="font-medium text-sm dark:text-slate-500 text-slate-300">
-                    Nenhum dado encontrado para "{{ keyWordRef }}".
-                  </span>
+                  <div class="flex gap-1 font-medium text-sm dark:text-slate-500 text-slate-300">
+                    <span>Nenhum dado encontrado para</span>
+                    <div class="truncate max-w-52">
+                      "{{ keyWordRef }}".
+                    </div>
+                  </div>
                 </div>
               </td>
             </tr>
 
             <TableItem
-              v-for="(tableLine, idx) in tableDataRef"
+              v-for="(tableLine, idx) in pageRef"
               :key="idx"
               :table-line="tableLine"
             />
           </tbody>
         </table>
+
+        <div
+          v-if="tableDataRef.tableData.length"
+          class="mt-4"
+        >
+          <PaginationClassic
+            :data="tableDataRef.tableData"
+            :items-per-page="5"
+            @pageData="paginate"
+          />
+        </div>
       </div>
     </div>
   </div>

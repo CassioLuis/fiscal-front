@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import {
-  FloatingMenu, DropdownTransaction, DragAndDrop, InputFile, Table, PaginationClassic, Datepicker, DropdownClassic, CreditCard, DebitCard
+  FloatingMenu, DropdownTransaction, DragAndDrop, InputFile, Table, Datepicker, DropdownClassic, CreditCard, DebitCard
 } from '@/components/ui'
 import {
   BancoDoBrasil, Sicredi, Bradesco, CaixaEconomica, Sicoob, Santander
@@ -11,7 +11,7 @@ import { dataStatement } from '@/infra/mock'
 
 const selectedFiles = ref<any>([])
 const dragAndDropArea = ref<boolean>(false)
-const convertedData = ref<Array<any>>([])
+const convertedData = ref<Array<any>>([123])
 
 function onUpLoad (file: any): void {
   selectedFiles.value = file
@@ -164,8 +164,6 @@ const headers = [
             :headers="headers"
             :table-data="dataStatement"
           />
-
-          <PaginationClassic />
 
           <FloatingMenu />
         </div>

@@ -1,3 +1,54 @@
+<script setup lang="ts">
+import { onMounted, reactive, ref, watch } from 'vue'
+
+const { data, itemsPerPage } = defineProps<{
+  data: Array<any>
+  itemsPerPage: number
+}>()
+
+const emit = defineEmits(['pageData'])
+
+const paginated = reactive<{ pages: Array<any> }>({ pages: [] })
+const pageNumber = ref<number>(0)
+
+onMounted(() => {
+  createPagination()
+  toPage(0)
+})
+
+function createPagination () {
+  paginated.pages = data.reduce((acc, curr, index) => {
+    const chunkIndex = Math.floor(index / itemsPerPage)
+    !(index % itemsPerPage) ? acc.push([curr]) : acc[chunkIndex].push(curr)
+    return acc
+  }, [])
+}
+
+function toPage (page: number) {
+  pageNumber.value = page
+  emit('pageData', paginated.pages[page])
+}
+
+function nextPage () {
+  if (pageNumber.value === paginated.pages.length - 1) return
+  pageNumber.value++
+  toPage(pageNumber.value)
+}
+
+function prevPage () {
+  if (pageNumber.value <= 0) return
+  pageNumber.value--
+  toPage(pageNumber.value)
+}
+
+watch(data, () => {
+  createPagination()
+  toPage(0)
+}, { deep: true })
+
+
+</script>
+
 <template>
   <div class="flex flex-col sm:flex-row sm:items-center sm:gap-10 sm:justify-center">
     <nav
@@ -6,25 +57,32 @@
       aria-label="Navigation"
     >
       <ul class="flex justify-center">
-        <li class="ml-3 first:ml-0">
-          <span class="btn bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-300 dark:text-slate-600">&lt;- Previous</span>
-        </li>
-        <li class="ml-3 first:ml-0">
-          <a
+        <li class="ml-3 first:ml-0 cursor-pointer">
+          <span
             class="btn bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 text-indigo-500"
-            href="#0"
-          >Next -&gt;</a>
+            @click="prevPage"
+          >
+            &lt;- Anterior
+          </span>
+        </li>
+        <li class="ml-3 first:ml-0 cursor-pointer">
+          <span
+            class="btn bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 text-indigo-500"
+            @click="nextPage"
+          >
+            Próxima -&gt;
+          </span>
         </li>
       </ul>
     </nav>
     <div class="text-sm text-slate-500 dark:text-slate-400 text-center sm:text-left">
-      Showing <span class="font-medium text-slate-600 dark:text-slate-300">1</span> to <span class="font-medium text-slate-600 dark:text-slate-300">10</span> of <span class="font-medium text-slate-600 dark:text-slate-300">467</span> results
+      Página
+      <span class="font-medium text-slate-600 dark:text-slate-300">{{ pageNumber + 1 }} - {{ paginated.pages.length }}
+        de
+      </span>
+      <span class="font-medium text-slate-600 dark:text-slate-300">
+        {{ data.length }}
+      </span> resultados
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  name: 'PaginationClassic',
-}
-</script>
