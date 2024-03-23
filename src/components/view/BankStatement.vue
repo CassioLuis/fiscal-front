@@ -37,7 +37,7 @@ const banks: Array<any> = [
   { name: 'Santander', logo: Santander }
 ]
 
-const headers = [
+const headers: Array<{ name: string, key: string }> = [
   { name: 'Data', key: 'data' },
   { name: 'Descrição', key: 'descricao' },
   { name: 'Documento', key: 'documento' },

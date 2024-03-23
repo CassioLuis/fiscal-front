@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref, watch } from 'vue'
 
-const { data, itemsPerPage } = defineProps<{
+const props = defineProps<{
   data: Array<any>
   itemsPerPage: number
 }>()
 
-const emit = defineEmits(['pageData'])
+const emit = defineEmits<{ pageData: any[] }>()
 
 const paginated = reactive<{ pages: Array<any> }>({ pages: [] })
 const pageNumber = ref<number>(0)
@@ -16,32 +16,33 @@ onMounted(() => {
   toPage(0)
 })
 
-function createPagination () {
-  paginated.pages = data.reduce((acc, curr, index) => {
-    const chunkIndex = Math.floor(index / itemsPerPage)
-    !(index % itemsPerPage) ? acc.push([curr]) : acc[chunkIndex].push(curr)
+function createPagination (): void {
+  paginated.pages = props.data.reduce((acc, curr, index) => {
+    const chunkIndex = Math.floor(index / props.itemsPerPage)
+    !(index % props.itemsPerPage) ? acc.push([curr]) : acc[chunkIndex].push(curr)
     return acc
   }, [])
 }
 
-function toPage (page: number) {
+function toPage (page: number): void {
   pageNumber.value = page
   emit('pageData', paginated.pages[page])
 }
 
-function nextPage () {
+function nextPage (): void {
   if (pageNumber.value === paginated.pages.length - 1) return
   pageNumber.value++
   toPage(pageNumber.value)
 }
 
-function prevPage () {
+function prevPage (): void {
   if (pageNumber.value <= 0) return
   pageNumber.value--
   toPage(pageNumber.value)
 }
 
-watch(data, () => {
+watch(() => props.data, () => {
+  console.log(`ola`)
   createPagination()
   toPage(0)
 }, { deep: true })
@@ -81,7 +82,7 @@ watch(data, () => {
         de
       </span>
       <span class="font-medium text-slate-600 dark:text-slate-300">
-        {{ data.length }}
+        {{ props.data.length }}
       </span> resultados
     </div>
   </div>

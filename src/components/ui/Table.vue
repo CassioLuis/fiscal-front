@@ -58,18 +58,6 @@ function handleSearch (keyWord: any) {
       return String(objeto[key]).toLowerCase().includes(keyWord.toLowerCase())
     })
   })
-
-  // tableDataRef.splice(0, tableDataRef.length, ...tableData.filter(objeto => {
-  //   return Object.keys(objeto).some(key => {
-  //     return String(objeto[key]).toLowerCase().includes(keyWord.toLowerCase())
-  //   })
-  // }))
-
-  // Vue.set(tableDataRef, 'value', tableData.filter(objeto => {
-  //   return Object.keys(objeto).some(key => {
-  //     return String(objeto[key]).toLowerCase().includes(keyWord.toLowerCase())
-  //   })
-  // }))
 }
 
 const keyWordRef = ref<any>('')
@@ -168,7 +156,7 @@ function paginate (emit: any) {
         >
           <PaginationClassic
             :data="tableDataRef.tableData"
-            :items-per-page="5"
+            :items-per-page="3"
             @pageData="paginate"
           />
         </div>
