@@ -42,7 +42,6 @@ function prevPage (): void {
 }
 
 watch(() => props.data, () => {
-  console.log(`ola`)
   createPagination()
   toPage(0)
 }, { deep: true })
@@ -60,7 +59,8 @@ watch(() => props.data, () => {
       <ul class="flex justify-center">
         <li class="ml-3 first:ml-0 cursor-pointer">
           <span
-            class="btn bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 text-indigo-500"
+            class="btn bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700"
+            :class="paginated.pages.length < 1 || pageNumber === 0 ? 'text-slate-300 dark:text-slate-600 cursor-default' : 'hover:border-slate-300 dark:hover:border-slate-600 text-indigo-500'"
             @click="prevPage"
           >
             &lt;- Anterior
@@ -68,12 +68,25 @@ watch(() => props.data, () => {
         </li>
         <li class="ml-3 first:ml-0 cursor-pointer">
           <span
-            class="btn bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 text-indigo-500"
+            class="btn bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700"
+            :class="paginated.pages.length < 1 ? 'text-slate-300 dark:text-slate-600 cursor-default' : 'hover:border-slate-300 dark:hover:border-slate-600 text-indigo-500'"
             @click="nextPage"
           >
             Próxima -&gt;
           </span>
         </li>
+        <!-- <li class="ml-3 first:ml-0">
+          <span
+            class="btn bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-300 dark:text-slate-600"
+          >&lt;-
+            Previous</span>
+        </li>
+        <li class="ml-3 first:ml-0">
+          <a
+            class="btn bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 text-indigo-500"
+            href="#0"
+          >Next -&gt;</a>
+        </li> -->
       </ul>
     </nav>
     <div class="text-sm text-slate-500 dark:text-slate-400 text-center sm:text-left">

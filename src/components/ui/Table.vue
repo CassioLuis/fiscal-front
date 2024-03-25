@@ -3,66 +3,55 @@ import { TableItem, TableHeader, SearchForm, PaginationClassic } from '@/compone
 import { ref, reactive } from 'vue'
 
 
-const { tableData } = defineProps<{
+const props = defineProps<{
   tableData: Array<any>
   headers: Array<any>
 }>()
 
-const tableDataRef = reactive<{ tableData: Array<any> }>({ tableData })
+const tableDataRef = reactive<{ tableData: Array<any> }>({ tableData: props.tableData })
+const keyWordRef = ref<any>('')
+const pageRef = ref<Array<any>>([])
 
 function handleSort (key: string) {
-  if (keyValue !== key) position = 0
-  const direction = directions[position]
+  if (keyValue !== key) sortDirection = 0
+  const direction = directions[sortDirection]
   const sortFunction = sortFunctions[direction]
   sortFunction(key)
   keyValue = key
 }
 
-const directions: Array<string> = ['asc', 'desc', 'default']
+const directions: Array<string> = ['asc', 'desc']
 
-let position: number = 0
+let sortDirection: number = 0
 let keyValue: string = ''
 
 const sortFunctions: any = {
   asc (key: string) {
-    position++
-    tableDataRef.tableData.sort((a: any, b: any) => asc(a[key], b[key]))
+    sortDirection++
+    tableDataRef.tableData.sort((a: any, b: any) => {
+      if (a[key] < b[key]) return -1
+      if (a[key] > b[key]) return 1
+      return 0
+    })
   },
   desc (key: string) {
-    position++
-    tableDataRef.tableData.sort((a: any, b: any) => desc(a[key], b[key]))
-  },
-  default () {
-    position = 0
-    tableDataRef.tableData.splice(0, tableDataRef.tableData.length, ...tableData)
-    // tableDataRef.tableData = tableData
+    sortDirection--
+    tableDataRef.tableData.sort((a: any, b: any) => {
+      if (a[key] < b[key]) return 1
+      if (a[key] > b[key]) return -1
+      return 0
+    })
   }
-}
-
-function asc (a: string, b: string): number {
-  if (a < b) return -1
-  if (a > b) return 1
-  return 0
-}
-
-function desc (a: string, b: string): number {
-  if (a < b) return 1
-  if (a > b) return -1
-  return 0
 }
 
 function handleSearch (keyWord: any) {
   keyWordRef.value = keyWord
-  tableDataRef.tableData = tableData.filter(objeto => {
+  tableDataRef.tableData = props.tableData.filter(objeto => {
     return Object.keys(objeto).some(key => {
       return String(objeto[key]).toLowerCase().includes(keyWord.toLowerCase())
     })
   })
 }
-
-const keyWordRef = ref<any>('')
-
-const pageRef = ref<Array<any>>([])
 
 function paginate (emit: any) {
   pageRef.value = emit
@@ -143,6 +132,7 @@ function paginate (emit: any) {
             </tr>
 
             <TableItem
+              v-show="tableDataRef.tableData.length"
               v-for="(tableLine, idx) in pageRef"
               :key="idx"
               :table-line="tableLine"
@@ -156,7 +146,7 @@ function paginate (emit: any) {
         >
           <PaginationClassic
             :data="tableDataRef.tableData"
-            :items-per-page="3"
+            :items-per-page="5"
             @pageData="paginate"
           />
         </div>
